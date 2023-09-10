@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
     constructor(
         private countryService: CountryService,
-        private toastrService: ToastrService
+        private toastrService: ToastrService,
     ) { }
 
     public ngOnInit(): void {

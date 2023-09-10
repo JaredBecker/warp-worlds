@@ -1,6 +1,7 @@
-<button type="button" class="btn btn-primary" (click)="showToast()">Click me</button>
-<p>
-	<ngb-alert [dismissible]="false">
-		<strong>Warning!</strong> Better check yourself, you're not looking too good.
-	</ngb-alert>
-</p>
+<app-navbar />
+<main class="container">
+    <router-outlet></router-outlet>
+</main>
+<button type="button" class="btn btn-primary text-white back_to_top d-none" appScrollToTop>
+    <i class="fa-regular fa-circle-up"></i>
+</button>

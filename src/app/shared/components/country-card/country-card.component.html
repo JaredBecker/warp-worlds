@@ -1,0 +1,23 @@
+<a class="d-block card p-3 h-100 country_card">
+    <div class="position-relative d-flex justify-content-center">
+        <!-- Why is this an emoji and not an image!?!?! -->
+        <p class="flag m-0">
+            {{ country.flag }}
+        </p>
+
+        <div
+            *ngIf="country.coatOfArms.png || country.coatOfArms.svg"
+            class="coat_of_arms ratio ratio-1x1"
+        >
+            <img
+                [src]="country.coatOfArms.png ? country.coatOfArms.png : country.coatOfArms.svg"
+                [alt]="country.name.official + ' coat of arms'"
+            />
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-center">
+        <p class="fw-bolder m-0">
+            {{ country.name.common }}
+        </p>
+    </div>
+</a>

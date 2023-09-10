@@ -5,10 +5,12 @@ import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { RegionFilterComponent } from './components/region-filter/region-filter.component';
+import { CountryCardComponent } from './components/country-card/country-card.component';
 
 @NgModule({
     declarations: [
-    RegionFilterComponent
+    RegionFilterComponent,
+    CountryCardComponent
   ],
     imports: [
         CommonModule,
@@ -18,6 +20,7 @@ import { RegionFilterComponent } from './components/region-filter/region-filter.
     exports: [
         NgbModule,
         RegionFilterComponent,
+        CountryCardComponent,
     ]
 })
 export class SharedModule { }

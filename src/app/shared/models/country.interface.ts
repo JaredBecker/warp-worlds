@@ -9,6 +9,11 @@ export interface Country {
             symbol: string;
         }
     };
+    flag: string;
+    coatOfArms: {
+        png: string;
+        svg: string;
+    }
     capital: string[];
     region: string;
     languages: { [key: string]: string };

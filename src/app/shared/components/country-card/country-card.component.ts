@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { CountryMin } from '@shared/models/country-min.interface';
+
+import { Country } from '@shared/models/country.interface';
 
 @Component({
   selector: 'app-country-card',
@@ -7,5 +8,5 @@ import { CountryMin } from '@shared/models/country-min.interface';
   styleUrls: ['./country-card.component.scss']
 })
 export class CountryCardComponent {
-    @Input() public country!: CountryMin;
+    @Input() public country!: Country;
 }

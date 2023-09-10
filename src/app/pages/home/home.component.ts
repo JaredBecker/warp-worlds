@@ -6,7 +6,6 @@ import { ToastrService } from 'ngx-toastr';
 
 import { CountryService } from '@shared/services/country.service';
 import { Country } from '@shared/models/country.interface';
-import { CountryMin } from '@shared/models/country-min.interface';
 
 @Component({
     selector: 'app-home',
@@ -14,7 +13,9 @@ import { CountryMin } from '@shared/models/country-min.interface';
     styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-    public countries: CountryMin[] = [];
+    public countries: Country[] = [];
+    public placeholders: any[] = new Array(24);
+    public loading: boolean = true;
 
     private _country_subscription?: Subscription;
 
@@ -29,8 +30,12 @@ export class HomeComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (countries) => {
                     this.countries = countries;
+                    this.loading = false;
                 },
-                error: () => this.toastrService.error('Please try refreshing the page', 'Failed to load countries'),
+                error: () => {
+                    this.toastrService.error('Please try refreshing the page', 'Failed to load countries');
+                    this.loading = false;
+                },
             })
     }
 

@@ -6,8 +6,16 @@
         <app-region-filter />
     </div>
     <div class="row mt-3">
-        <div *ngFor="let country of countries" class="col-6 col-md-4 col-lg-3 mb-3">
-            <app-country-card [country]="country" />
-        </div>
+        <ng-container *ngIf="loading; else country_listing">
+            <div *ngFor="let placeholder of placeholders" class="col-6 col-md-4 col-lg-3 mb-3">
+                <app-country-card-placeholder />
+            </div>
+        </ng-container>
+
+        <ng-template #country_listing>
+            <div *ngFor="let country of countries" class="col-6 col-md-4 col-lg-3 mb-3">
+                <app-country-card [country]="country" />
+            </div>
+        </ng-template>
     </div>
 </div>

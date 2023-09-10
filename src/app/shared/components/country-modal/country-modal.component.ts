@@ -20,15 +20,5 @@ export class CountryModalComponent {
         this.modalService.dismissAll();
     }
 
-    public getCurrentTime(timezone: string): string {
-        const now = new Date();
-        const options: Intl.DateTimeFormatOptions = {
-            timeZone: timezone,
-            hour12: false,
-            hour: '2-digit',
-            minute: '2-digit',
-        };
 
-        return now.toLocaleString(undefined, options);
-    }
 }

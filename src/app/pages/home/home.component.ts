@@ -30,6 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
             .subscribe({
                 next: (countries) => {
                     this.countries = countries;
+                    console.log(this.countries);
                     this.loading = false;
                 },
                 error: () => {

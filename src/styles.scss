@@ -13,3 +13,7 @@ $primary: #a436f1;
     border-radius: 1rem;
     padding: 1rem;
 }
+
+tr:last-child {
+    border-bottom: 0px transparent;
+}

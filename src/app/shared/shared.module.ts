@@ -10,6 +10,7 @@ import { CountryCardPlaceholderComponent } from './components/country-card-place
 import { CountryModalComponent } from './components/country-modal/country-modal.component';
 import { CurrencyObjectValuesPipe } from './pipes/currency-object-values.pipe';
 import { LanguagePipe } from './pipes/language.pipe';
+import { LocalTimePipe } from './pipes/local-time.pipe';
 
 @NgModule({
     declarations: [
@@ -18,7 +19,8 @@ import { LanguagePipe } from './pipes/language.pipe';
     CountryCardPlaceholderComponent,
     CountryModalComponent,
     CurrencyObjectValuesPipe,
-    LanguagePipe
+    LanguagePipe,
+    LocalTimePipe
   ],
     imports: [
         CommonModule,

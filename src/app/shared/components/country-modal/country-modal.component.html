@@ -34,36 +34,29 @@
             </tr>
             <tr>
                 <th class="fw-bolder">Time</th>
-                <td>{{ country.timezones[0] }}</td>
+                <td>{{ country.timezones[0] | localTime }}</td>
             </tr>
             <tr *ngIf="country.coatOfArms.png || country.coatOfArms.svg">
                 <th class="fw-bolder">Coat Of Arms</th>
                 <td>
-                    <img
-                        width="35"
-                        [src]="country.coatOfArms.png ? country.coatOfArms.png : country.coatOfArms.svg"
-                        [alt]="country.name.official + ' coat of arms'"
-                    />
+                    <img width="35" [src]="country.coatOfArms.png ? country.coatOfArms.png : country.coatOfArms.svg" [alt]="country.name.official + ' coat of arms'" />
                 </td>
             </tr>
         </tbody>
     </table>
+    <div class="d-flex gap-2 justify-content-center">
+        <a *ngIf="country.maps.googleMaps" [href]="country.maps.googleMaps" target="_blank" class="btn btn-outline-secondary btn-sm">
+            Google Maps
+        </a>
+        <a *ngIf="country.maps.openStreetMaps" [href]="country.maps.openStreetMaps" target="_blank" class="btn btn-outline-secondary btn-sm">
+            Open Street Map
+        </a>
+    </div>
 </div>
 <div class="modal-footer">
-    <a
-        *ngIf="country.maps.googleMaps"
-        [href]="country.maps.googleMaps"
-        target="_blank"
-        class="btn btn-primary"
-    >
-        Google Maps
-    </a>
-    <a
-        *ngIf="country.maps.openStreetMaps"
-        [href]="country.maps.openStreetMaps"
-        target="_blank"
-        class="btn btn-primary"
-    >
-        Open Street Map
-    </a>
+    <button class="btn btn-primary w-100">
+        <i class="fa-solid fa-star me-1"></i>
+        Add To Favorites
+    </button>
+
 </div>

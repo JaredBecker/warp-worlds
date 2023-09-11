@@ -45,18 +45,21 @@
         </tbody>
     </table>
     <div class="d-flex gap-2 justify-content-center">
-        <a *ngIf="country.maps.googleMaps" [href]="country.maps.googleMaps" target="_blank" class="btn btn-outline-secondary btn-sm">
+        <a *ngIf="country.maps.googleMaps" [href]="country.maps.googleMaps" target="_blank" class="btn btn-secondary btn-sm">
             Google Maps
         </a>
-        <a *ngIf="country.maps.openStreetMaps" [href]="country.maps.openStreetMaps" target="_blank" class="btn btn-outline-secondary btn-sm">
+        <a *ngIf="country.maps.openStreetMaps" [href]="country.maps.openStreetMaps" target="_blank" class="btn btn-secondary btn-sm">
             Open Street Map
         </a>
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary w-100">
+    <button *ngIf="!in_favorites" class="btn btn-primary w-100" (click)="onAddToFavorites(country)">
         <i class="fa-solid fa-star me-1"></i>
         Add To Favorites
     </button>
-
+    <button *ngIf="in_favorites" class="btn btn-danger w-100" (click)="onRemoveFromFavorites(country.name.common)">
+        <i class="fa-solid fa-trash me-1"></i>
+        Remove From Favorites
+    </button>
 </div>

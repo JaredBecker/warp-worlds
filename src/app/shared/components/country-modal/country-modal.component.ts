@@ -29,7 +29,9 @@ export class CountryModalComponent implements OnInit, OnDestroy {
             .getFavoriteCountriesStream()
             .subscribe({
                 next: (favorite_countries) => {
-                    if (favorite_countries[this.country.fifa]) {
+                    const formatted_name = this.country.name.common.replaceAll(' ', '');
+
+                    if (favorite_countries[formatted_name]) {
                         this.in_favorites = true;
                     } else {
                         this.in_favorites = false;
@@ -50,7 +52,7 @@ export class CountryModalComponent implements OnInit, OnDestroy {
         this.favoritesService.addToFavorites(country);
     }
 
-    public onRemoveFromFavorites(fifa_code: string) {
-        this.favoritesService.removeFromFavorites(fifa_code);
+    public onRemoveFromFavorites(common_name: string) {
+        this.favoritesService.removeFromFavorites(common_name);
     }
 }

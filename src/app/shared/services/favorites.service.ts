@@ -47,11 +47,12 @@ export class FavoritesService {
      */
     public addToFavorites(country: Country): void {
         const favorite_countries = this.getFavoriteCountries();
+        const formatted_name = country.name.common.replaceAll(' ', '');
 
-        if (favorite_countries[country.fifa]) {
+        if (favorite_countries[formatted_name]) {
             this.toastrService.warning(`You have ${country.name.common} in your favorites list`, 'Already In Favorites');
         } else {
-            favorite_countries[country.fifa] = country;
+            favorite_countries[formatted_name] = country;
             this.setFavoriteCountries(favorite_countries);
             this._$favorite_countries.next(favorite_countries);
             this.toastrService.success(`${country.name.common} has been added to your favorites list.`, 'Added To Favorites');
@@ -61,19 +62,20 @@ export class FavoritesService {
     /**
      * Remove the country with the provided FIFA code from local storage and updates country stream
      *
-     * @param fifa_code FIFA code of item to remove
+     * @param common_name Common name of country to remove
      */
-    public removeFromFavorites(fifa_code: string): void {
+    public removeFromFavorites(common_name: string): void {
         const favorite_countries = this.getFavoriteCountries();
+        const formatted_name = common_name.replaceAll(' ', '');
 
-        if (favorite_countries[fifa_code]) {
-            const name = favorite_countries[fifa_code].name.common;
-            delete favorite_countries[fifa_code];
+        if (favorite_countries[formatted_name]) {
+            const name = favorite_countries[formatted_name].name.common;
+            delete favorite_countries[formatted_name];
             this.setFavoriteCountries(favorite_countries);
             this._$favorite_countries.next(favorite_countries);
             this.toastrService.success(`${name} has been removed from your favorites list.`, 'Removed From Favorites');
         } else {
-            this.toastrService.error(`No country with code ${fifa_code} was found.`, 'Failed To Delete');
+            this.toastrService.error(`${common_name} was found in your favorite list.`, 'Failed To Delete');
         }
     }
 
@@ -83,11 +85,15 @@ export class FavoritesService {
      * @param country Country to add or remove from currently selected obj
      */
     public toggleCurrentlySelected(country: Country) {
-        if (this._currently_selected[country.fifa]) {
-            delete this._currently_selected[country.fifa];
+        const formatted_name = country.name.common.replaceAll(' ', '');
+
+        if (this._currently_selected[formatted_name]) {
+            delete this._currently_selected[formatted_name];
         } else {
-            this._currently_selected[country.fifa] = country;
+            this._currently_selected[formatted_name] = country;
         }
+
+        console.log(this._currently_selected);
 
         // Update key count so it can be used to hide or show mass add to favorite button
         this._$currently_selected_count.next(Object.keys(this._currently_selected).length);

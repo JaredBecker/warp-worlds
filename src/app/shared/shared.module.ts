@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
@@ -8,9 +9,10 @@ import { RegionFilterComponent } from './components/region-filter/region-filter.
 import { CountryCardComponent } from './components/country-card/country-card.component';
 import { CountryCardPlaceholderComponent } from './components/country-card-placeholder/country-card-placeholder.component';
 import { CountryModalComponent } from './components/country-modal/country-modal.component';
+
 import { CurrencyObjectValuesPipe } from './pipes/currency-object-values.pipe';
 import { LanguagePipe } from './pipes/language.pipe';
-import { LocalTimePipe } from './pipes/local-time.pipe';
+import { CurrentLocalTimePipe } from './pipes/local-time.pipe';
 
 @NgModule({
     declarations: [
@@ -20,18 +22,22 @@ import { LocalTimePipe } from './pipes/local-time.pipe';
     CountryModalComponent,
     CurrencyObjectValuesPipe,
     LanguagePipe,
-    LocalTimePipe
+    CurrentLocalTimePipe
   ],
     imports: [
         CommonModule,
         RouterModule,
-        NgbModule
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule,
     ],
     exports: [
         NgbModule,
         RegionFilterComponent,
         CountryCardComponent,
-        CountryCardPlaceholderComponent
+        CountryCardPlaceholderComponent,
+        FormsModule,
+        ReactiveFormsModule,
     ]
 })
 export class SharedModule { }

@@ -28,6 +28,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void {
+        // Create preloader for no results image so it doesn't have to try and load in only when the user hit no results
+        new Promise<void>((resolve, reject) => {
+            const img = new Image();
+            img.onload = () => resolve();
+            img.onerror = error => reject(error);
+            img.src = '/assets/images/no_results.svg';
+        })
+
         this._country_subscription = this.countryService
             .getAllCountries()
             .subscribe({

@@ -1,5 +1,13 @@
 <a class="d-block card p-3 h-100 country_card" (click)="onSelectCountry()">
-    <div class="position-relative d-flex justify-content-center">
+    <div class="position-relative d-flex justify-content-center pt-2 pt-sm-0">
+        <button
+            class="btn btn-outline-secondary btn-sm favorite_btn"
+            (click)="selectFavorite($event)"
+            appMarkAsSelected
+        >
+            {{ select }}
+            <i class="fa-solid fa-star"></i>
+        </button>
         <!-- Why is this an emoji and not an image!?!?! -->
         <p class="flag m-0">
             {{ country.flag }}

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 
+import { BehaviorSubject, Observable } from 'rxjs';
+
 import { ToastrService } from 'ngx-toastr';
 
 import { Country } from '@shared/models/country.interface';
-import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -12,6 +13,7 @@ export class FavoritesService {
     private _currently_selected: {[key: string]: Country} = {};
 
     private _$favorite_countries: BehaviorSubject<{[key: string]: Country}> = new BehaviorSubject({});
+    private _$currently_selected_count: BehaviorSubject<number> = new BehaviorSubject(0);
 
     constructor(
         private toastrService: ToastrService
@@ -27,6 +29,15 @@ export class FavoritesService {
      */
     public getFavoriteCountriesStream(): Observable<{[key: string]: Country}> {
         return this._$favorite_countries.asObservable();
+    }
+
+    /**
+     * Gets the currently selected count stream
+     *
+     * @returns Stream of the count of currently selected countries
+     */
+    public getCurrentlySelectedCountStream() {
+        return this._$currently_selected_count.asObservable();
     }
 
     /**
@@ -48,7 +59,7 @@ export class FavoritesService {
     }
 
     /**
-     * Removed the country with the provided FIFA code from local storage and updates country stream
+     * Remove the country with the provided FIFA code from local storage and updates country stream
      *
      * @param fifa_code FIFA code of item to remove
      */
@@ -64,6 +75,22 @@ export class FavoritesService {
         } else {
             this.toastrService.error(`No country with code ${fifa_code} was found.`, 'Failed To Delete');
         }
+    }
+
+    /**
+     * Toggles a country in the currently selected obj
+     *
+     * @param country Country to add or remove from currently selected obj
+     */
+    public toggleCurrentlySelected(country: Country) {
+        if (this._currently_selected[country.fifa]) {
+            delete this._currently_selected[country.fifa];
+        } else {
+            this._currently_selected[country.fifa] = country;
+        }
+
+        // Update key count so it can be used to hide or show mass add to favorite button
+        this._$currently_selected_count.next(Object.keys(this._currently_selected).length);
     }
 
     /**

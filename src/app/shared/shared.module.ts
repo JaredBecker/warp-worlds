@@ -14,6 +14,7 @@ import { CurrencyObjectValuesPipe } from './pipes/currency-object-values.pipe';
 import { LanguagePipe } from './pipes/language.pipe';
 import { CurrentLocalTimePipe } from './pipes/local-time.pipe';
 import { SetActiveRegionDirective } from './directives/set-active-region.directive';
+import { MarkAsSelectedDirective } from './directives/mark-as-selected.directive';
 
 @NgModule({
     declarations: [
@@ -24,7 +25,8 @@ import { SetActiveRegionDirective } from './directives/set-active-region.directi
     CurrencyObjectValuesPipe,
     LanguagePipe,
     CurrentLocalTimePipe,
-    SetActiveRegionDirective
+    SetActiveRegionDirective,
+    MarkAsSelectedDirective
   ],
     imports: [
         CommonModule,

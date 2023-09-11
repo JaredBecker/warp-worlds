@@ -1,10 +1,11 @@
 import { Component, Renderer2 } from '@angular/core';
+
 import { ThemeService } from '@shared/services/theme.service';
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+    selector: 'app-navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
     public is_dark_mode: boolean;
@@ -27,7 +28,7 @@ export class NavbarComponent {
         this.renderer.setAttribute(
             document.querySelector('html'),
             'data-bs-theme',
-            this.is_dark_mode ? 'light' : 'dark'
+            this.is_dark_mode ? 'dark' : 'light'
         )
     }
 }

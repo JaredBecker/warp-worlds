@@ -1,11 +1,12 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 
+import { Subscription } from 'rxjs';
+
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { Country } from '@shared/models/country.interface';
 import { CountryModalComponent } from '@shared/components/country-modal/country-modal.component';
 import { FavoritesService } from '@shared/services/favorites.service';
-import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-country-card',
@@ -46,7 +47,7 @@ export class CountryCardComponent implements OnInit, OnDestroy {
      * Handles what should happen when clicking on country card.
      * Either displays modal or redirects to favorites page
      */
-    public onSelectCountry() {
+    public onSelectCountry(): void {
         if (this.use_modal) {
             const modalRef = this.modalService.open(CountryModalComponent);
             modalRef.componentInstance.country = this.country;
@@ -55,13 +56,10 @@ export class CountryCardComponent implements OnInit, OnDestroy {
         }
     }
 
-    public selectFavorite(event: Event) {
+    public selectFavorite(event: Event): void {
         // Stop the anchor tag opening modal or redirecting
         event.stopPropagation();
-
-        // Update button text
         this.select = this.select === 'Select' ? 'Selected' : 'Select';
-
         this.favoritesService.toggleCurrentlySelected(this.country);
     }
 }

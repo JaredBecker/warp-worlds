@@ -93,10 +93,24 @@ export class FavoritesService {
             this._currently_selected[formatted_name] = country;
         }
 
-        console.log(this._currently_selected);
-
         // Update key count so it can be used to hide or show mass add to favorite button
         this._$currently_selected_count.next(Object.keys(this._currently_selected).length);
+    }
+
+    public addMultipleCountriesToFavorites() {
+        if (Object.keys(this._currently_selected).length > 0) {
+            const favorite_countries = this.getFavoriteCountries();
+
+            for (const key in this._currently_selected) {
+                favorite_countries[key] = this._currently_selected[key];
+            }
+
+            this.setFavoriteCountries(favorite_countries);
+            this._$favorite_countries.next(favorite_countries);
+            this._currently_selected = {};
+            this._$currently_selected_count.next(0);
+            this.toastrService.success('All selected countries have been added to your favorites list', 'Updated Favorites');
+        }
     }
 
     /**

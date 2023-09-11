@@ -1,12 +1,12 @@
 <div class="d-flex justify-content-end">
     <input
         type="text"
-        class="form-control me-2"
+        class="form-control me-2 rounded-4"
         placeholder="Search Country Name"
         [formControl]="search_input"
     />
     <div ngbDropdown class="d-inline-block" [autoClose]="false" #region_filter="ngbDropdown">
-        <button type="button" class="btn btn-outline-primary" id="region_dropdown" ngbDropdownToggle>
+        <button type="button" class="btn btn-primary rounded-4" id="region_dropdown" ngbDropdownToggle>
             Filter Regions
         </button>
         <div ngbDropdownMenu aria-labelledby="region_dropdown">

@@ -13,7 +13,7 @@ export class ThemeService {
 
     public toggleTheme(): void {
         this.is_dark_mode = !this.is_dark_mode;
-        console.log(this.is_dark_mode);
+        localStorage.setItem('theme', this.is_dark_mode ? 'dark' : 'light');
     }
 
     public isDarkModeEnabled(): boolean {

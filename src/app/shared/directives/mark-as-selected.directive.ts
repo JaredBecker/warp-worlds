@@ -20,12 +20,12 @@ export class MarkAsSelectedDirective {
         }
 
         // Update button class so it doesn't get lost in the purple background
-        if (this.el.nativeElement.classList.contains('btn-outline-secondary')) {
-            this.renderer.removeClass(this.el.nativeElement, 'btn-outline-secondary');
+        if (this.el.nativeElement.classList.contains('btn-secondary')) {
+            this.renderer.removeClass(this.el.nativeElement, 'btn-secondary');
             this.renderer.addClass(this.el.nativeElement, 'btn-primary');
         } else {
             this.renderer.removeClass(this.el.nativeElement, 'btn-primary');
-            this.renderer.addClass(this.el.nativeElement, 'btn-outline-secondary');
+            this.renderer.addClass(this.el.nativeElement, 'btn-secondary');
         }
     }
 

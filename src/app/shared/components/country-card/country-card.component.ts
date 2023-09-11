@@ -41,7 +41,7 @@ export class CountryCardComponent {
         event.stopPropagation();
 
         // Update button text
-        this.select = this.select = 'Select' ? 'Selected' : 'Select';
+        this.select = this.select === 'Select' ? 'Selected' : 'Select';
 
         this.favoritesService.toggleCurrentlySelected(this.country);
     }

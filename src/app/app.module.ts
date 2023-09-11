@@ -30,7 +30,8 @@ import { HomeComponent } from './pages/home/home.component';
         ToastrModule.forRoot({
             positionClass: 'toast-bottom-right',
             progressBar: true,
-            extendedTimeOut: 5000,
+            extendedTimeOut: 3000,
+            timeOut: 3000,
         }),
     ],
     providers: [],

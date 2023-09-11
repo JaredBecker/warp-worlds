@@ -34,7 +34,7 @@
             </tr>
             <tr>
                 <th class="fw-bolder">Time</th>
-                <td>{{ country.timezones[0] | localTime }}</td>
+                <td>{{ country.timezones[0] | currentLocalTime }}</td>
             </tr>
             <tr *ngIf="country.coatOfArms.png || country.coatOfArms.svg">
                 <th class="fw-bolder">Coat Of Arms</th>

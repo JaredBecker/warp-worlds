@@ -1,9 +1,9 @@
 <div class="my-5">
     <h1 class="fw-bolder">Country Listing</h1>
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolor, doloremque aliquam cum distinctio quam unde ipsa quis? Officiis, quia nisi!</p>
+    <p>Explore the countries of our world and build a list of your favorites!</p>
     <hr />
     <div class="d-flex justify-content-end">
-        <app-region-filter />
+        <app-region-filter (on_filter)="onFilter($event)" [regions]="regions" />
     </div>
     <div class="row mt-3">
         <ng-container *ngIf="loading; else country_listing">
@@ -13,9 +13,22 @@
         </ng-container>
 
         <ng-template #country_listing>
-            <div *ngFor="let country of countries" class="col-6 col-md-4 col-lg-3 mb-3">
-                <app-country-card [country]="country" />
-            </div>
+            <ng-container *ngIf="filtered_countries.length > 0; else no_results">
+                <div *ngFor="let country of filtered_countries" class="col-6 col-md-4 col-lg-3 mb-3">
+                    <app-country-card [country]="country" />
+                </div>
+            </ng-container>
+            <ng-template #no_results>
+                <div class="d-flex flex-column align-items-center">
+                    <img width="150" src="/assets/images/no_results.svg" alt="No results found">
+                    <h3 class="fw-bolder mt-2">No Results Found</h3>
+                    <p class="text-center">
+                        So many countries yet that doesn't seem to be one of them...
+                        <br />
+                        Try updating or clearing your filter.
+                    </p>
+                </div>
+            </ng-template>
         </ng-template>
     </div>
 </div>

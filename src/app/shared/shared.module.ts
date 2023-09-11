@@ -13,6 +13,7 @@ import { CountryModalComponent } from './components/country-modal/country-modal.
 import { CurrencyObjectValuesPipe } from './pipes/currency-object-values.pipe';
 import { LanguagePipe } from './pipes/language.pipe';
 import { CurrentLocalTimePipe } from './pipes/local-time.pipe';
+import { SetActiveRegionDirective } from './directives/set-active-region.directive';
 
 @NgModule({
     declarations: [
@@ -22,7 +23,8 @@ import { CurrentLocalTimePipe } from './pipes/local-time.pipe';
     CountryModalComponent,
     CurrencyObjectValuesPipe,
     LanguagePipe,
-    CurrentLocalTimePipe
+    CurrentLocalTimePipe,
+    SetActiveRegionDirective
   ],
     imports: [
         CommonModule,

@@ -44,15 +44,15 @@ export class CountryModalComponent implements OnInit, OnDestroy {
         this._favorite_countries_subscription?.unsubscribe();
     }
 
-    public closeModal() {
+    public closeModal(): void {
         this.modalService.dismissAll();
     }
 
-    public onAddToFavorites(country: Country) {
+    public onAddToFavorites(country: Country): void {
         this.favoritesService.addToFavorites(country);
     }
 
-    public onRemoveFromFavorites(common_name: string) {
+    public onRemoveFromFavorites(common_name: string): void {
         this.favoritesService.removeFromFavorites(common_name);
     }
 }

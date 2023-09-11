@@ -9,7 +9,7 @@ export class SetActiveRegionDirective {
         private renderer: Renderer2,
     ) { }
 
-    @HostListener('click') public onClick() {
+    @HostListener('click') public onClick(): void {
         // If clear then remove all active classes else toggle class
         if (this.el.nativeElement.innerText === 'Clear') {
             const btns = document.querySelectorAll('.region_filter_btn');

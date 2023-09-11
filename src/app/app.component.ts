@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this._currently_selected_sub?.unsubscribe();
     }
 
-    public onAddSelected() {
+    public onAddSelected(): void {
         this.favoritesService.addMultipleCountriesToFavorites();
     }
 }

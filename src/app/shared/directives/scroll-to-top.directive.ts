@@ -9,7 +9,7 @@ export class ScrollToTopDirective {
         private renderer: Renderer2,
     ) { }
 
-    @HostListener('window:scroll') public onWindowScroll() {
+    @HostListener('window:scroll') public onWindowScroll(): void {
         if (window.scrollY > 300) {
             this.renderer.removeClass(this.el.nativeElement, 'd-none');
             this.renderer.addClass(this.el.nativeElement, 'd-flex');
@@ -19,7 +19,7 @@ export class ScrollToTopDirective {
         }
     }
 
-    @HostListener('click') public scrollToTop() {
+    @HostListener('click') public scrollToTop(): void {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 }

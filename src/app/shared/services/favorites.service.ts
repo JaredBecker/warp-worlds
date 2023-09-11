@@ -36,7 +36,7 @@ export class FavoritesService {
      *
      * @returns Stream of the count of currently selected countries
      */
-    public getCurrentlySelectedCountStream() {
+    public getCurrentlySelectedCountStream(): Observable<number> {
         return this._$currently_selected_count.asObservable();
     }
 
@@ -60,7 +60,7 @@ export class FavoritesService {
     }
 
     /**
-     * Remove the country with the provided FIFA code from local storage and updates country stream
+     * Remove the country with the provided common name from local storage and updates country stream
      *
      * @param common_name Common name of country to remove
      */
@@ -84,7 +84,7 @@ export class FavoritesService {
      *
      * @param country Country to add or remove from currently selected obj
      */
-    public toggleCurrentlySelected(country: Country) {
+    public toggleCurrentlySelected(country: Country): void {
         const formatted_name = country.name.common.replaceAll(' ', '');
 
         if (this._currently_selected[formatted_name]) {
@@ -97,7 +97,10 @@ export class FavoritesService {
         this._$currently_selected_count.next(Object.keys(this._currently_selected).length);
     }
 
-    public addMultipleCountriesToFavorites() {
+    /**
+     * Adds the items in the currently selected obj to local storage
+     */
+    public addMultipleCountriesToFavorites(): void {
         if (Object.keys(this._currently_selected).length > 0) {
             const favorite_countries = this.getFavoriteCountries();
 

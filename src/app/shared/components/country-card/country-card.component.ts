@@ -22,7 +22,6 @@ export class CountryCardComponent {
         if (this.use_modal) {
             const modalRef = this.modalService.open(CountryModalComponent);
             modalRef.componentInstance.country = this.country;
-            console.log(this.country);
         } else {
             console.log('navigate by url on fav page');
         }

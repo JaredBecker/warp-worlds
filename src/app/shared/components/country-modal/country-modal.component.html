@@ -54,9 +54,12 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary w-100">
+    <button *ngIf="!in_favorites" class="btn btn-primary w-100" (click)="onAddToFavorites(country)">
         <i class="fa-solid fa-star me-1"></i>
         Add To Favorites
     </button>
-
+    <button *ngIf="in_favorites" class="btn btn-danger w-100" (click)="onRemoveFromFavorites(country.fifa)">
+        <i class="fa-solid fa-trash me-1"></i>
+        Remove From Favorites
+    </button>
 </div>

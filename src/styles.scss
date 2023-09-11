@@ -1,4 +1,29 @@
 @import 'ngx-toastr/toastr';
 
-/* Importing Bootstrap SCSS file. */
+$primary: #a436f1;
+
 @import 'bootstrap/scss/bootstrap';
+@import './scss/';
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+// Overriding some of bootstraps default stylings
+.modal-content {
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+tr:last-child {
+    border-bottom: 0px transparent;
+}
+
+.dropdown-menu {
+    padding: 0.5rem;
+
+    .dropdown-item {
+        border-radius: 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+}

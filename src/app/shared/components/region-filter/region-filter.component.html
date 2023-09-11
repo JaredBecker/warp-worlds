@@ -1,0 +1,32 @@
+<div class="d-flex justify-content-end">
+    <input
+        type="text"
+        class="form-control me-2"
+        placeholder="Search Country Name"
+        [formControl]="search_input"
+    />
+    <div ngbDropdown class="d-inline-block" [autoClose]="false" #region_filter="ngbDropdown">
+        <button type="button" class="btn btn-outline-primary" id="region_dropdown" ngbDropdownToggle>
+            Filter Regions
+        </button>
+        <div ngbDropdownMenu aria-labelledby="region_dropdown">
+            <button
+                *ngFor="let region of regions"
+                class="region_filter_btn"
+                (click)="onSelectRegion(region)"
+                ngbDropdownItem
+                appSetActiveRegion
+            >
+                {{ region }}
+            </button>
+            <button
+                class="region_filter_btn"
+                (click)="onClearRegions(); region_filter.close()"
+                ngbDropdownItem
+                appSetActiveRegion
+            >
+                Clear
+            </button>
+        </div>
+    </div>
+</div>

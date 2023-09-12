@@ -16,6 +16,9 @@ export class FavoritesComponent implements OnInit {
     ) { }
 
     public ngOnInit(): void {
+        // Clear currently selected list to make sure add to favorites button doesn't show on favorites page
+        this.favoritesService.clearCurrentlySelected();
+
         this.$countries_stream = this.favoritesService
             .getFavoriteCountriesStream()
             .pipe(

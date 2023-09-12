@@ -2,15 +2,21 @@
 <main class="container">
     <router-outlet></router-outlet>
 </main>
-<button type="button" class="btn btn-primary back_to_top d-none" appScrollToTop>
-    <i class="fa-regular fa-circle-up"></i>
-</button>
-<button
-    type="button"
-    class="btn btn-primary add_all rounded-4"
-    (click)="onAddSelected()"
-    [ngClass]="{'d-none': currently_selected_count === 0, 'd-block': currently_selected_count > 0}"
->
-    <i class="fa-solid fa-plus me-1"></i>
-    Add Selected
-</button>
+<div class="fixed_controls">
+    <button
+        type="button"
+        class="btn btn-primary rounded-4"
+        (click)="onAddSelected()"
+        [ngClass]="{'d-none': currently_selected_count === 0, 'd-block': currently_selected_count > 0}"
+    >
+        <i class="fa-solid fa-plus me-1"></i>
+        Add Selected
+    </button>
+    <button
+        type="button"
+        class="btn btn-primary back_to_top d-none ms-1"
+        appScrollToTop
+    >
+        <i class="fa-regular fa-circle-up"></i>
+    </button>
+</div>

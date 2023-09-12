@@ -1,6 +1,6 @@
 <nav class="navbar bg-primary">
     <div class="container">
-        <a class="navbar-brand fw-bolder text-uppercase d-flex align-items-center text-white">
+        <a routerLink="/" class="navbar-brand fw-bolder text-uppercase d-flex align-items-center text-white">
             <img src="/assets/images/logo.png" class="me-2" width="35" alt="Earth icon">
             <div class="d-flex flex-column">
                 <span class="logo_text">Warp</span>
@@ -8,7 +8,7 @@
             </div>
         </a>
         <div>
-            <a class="btn btn-light btn-sm text-primary rounded-3 me-1">
+            <a routerLink="/favorites" class="btn btn-light btn-sm text-primary rounded-3 me-1">
                 <i class="fa-solid fa-star me-1"></i>
                 My Favorites
             </a>
@@ -16,7 +16,6 @@
                 <i *ngIf="is_dark_mode" class="fa-solid fa-sun"></i>
                 <i *ngIf="!is_dark_mode" class="fa-solid fa-moon"></i>
             </button>
-
         </div>
     </div>
 </nav>

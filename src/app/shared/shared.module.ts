@@ -14,18 +14,20 @@ import { CurrencyObjectValuesPipe } from './pipes/currency-object-values.pipe';
 import { LanguagePipe } from './pipes/language.pipe';
 import { CurrentLocalTimePipe } from './pipes/local-time.pipe';
 import { SetActiveRegionDirective } from './directives/set-active-region.directive';
+import { CountryListingComponent } from './components/country-listing/country-listing.component';
 
 @NgModule({
     declarations: [
-    RegionFilterComponent,
-    CountryCardComponent,
-    CountryCardPlaceholderComponent,
-    CountryModalComponent,
-    CurrencyObjectValuesPipe,
-    LanguagePipe,
-    CurrentLocalTimePipe,
-    SetActiveRegionDirective,
-  ],
+        RegionFilterComponent,
+        CountryCardComponent,
+        CountryCardPlaceholderComponent,
+        CountryModalComponent,
+        CurrencyObjectValuesPipe,
+        LanguagePipe,
+        CurrentLocalTimePipe,
+        SetActiveRegionDirective,
+        CountryListingComponent,
+    ],
     imports: [
         CommonModule,
         RouterModule,
@@ -40,6 +42,7 @@ import { SetActiveRegionDirective } from './directives/set-active-region.directi
         CountryCardPlaceholderComponent,
         FormsModule,
         ReactiveFormsModule,
+        CountryListingComponent,
     ]
 })
 export class SharedModule { }

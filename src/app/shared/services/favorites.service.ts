@@ -41,6 +41,14 @@ export class FavoritesService {
     }
 
     /**
+     * Clears the values in currently selected and resets the count
+     */
+    public clearCurrentlySelected(): void {
+        this._currently_selected = {};
+        this._$currently_selected_count.next(0);
+    }
+
+    /**
      * Adds a country to your favorites list and updates country stream
      *
      * @param country Country to add to favorites

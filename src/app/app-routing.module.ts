@@ -5,6 +5,10 @@ import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
+    {
+        path: 'favorites',
+        loadChildren: () => import('@features/favorites/favorites.module').then(m => m.FavoritesModule),
+    }
 ];
 
 @NgModule({

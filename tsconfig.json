@@ -4,6 +4,7 @@
   "compilerOptions": {
     "paths": {
         "@shared/*": ["src/app/shared/*"],
+        "@features/*": ["src/app/features/*"],
     },
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",

@@ -1,20 +1,16 @@
-.back_to_top {
+.fixed_controls {
     position: fixed;
     bottom: 20px;
     right: 20px;
-    height: 40px;
-    width: 40px;
-    border-radius: 50%;
-    font-size: 1rem;
     z-index: 100;
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-.add_all {
-    position: fixed;
-    bottom: 20px;
-    right: 70px;
-    z-index: 100;
+.back_to_top {
+    height: 40px;
+    width: 40px;
+    border-radius: 1rem;
+    font-size: 1rem;
+    justify-content: center;
+    align-items: center;
 }

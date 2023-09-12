@@ -1,15 +1,21 @@
 <nav class="navbar bg-primary">
     <div class="container">
-        <a class="navbar-brand fw-bolder text-uppercase d-flex align-items-center text-white">
-            <img src="/assets/images/logo.png" class="me-2" width="50" alt="Earth icon">
+        <a routerLink="/" class="navbar-brand fw-bolder text-uppercase d-flex align-items-center text-white">
+            <img src="/assets/images/logo.png" class="me-2" width="35" alt="Earth icon">
             <div class="d-flex flex-column">
                 <span class="logo_text">Warp</span>
                 <span class="logo_text">Worlds</span>
             </div>
         </a>
-        <button class="btn btn-light btn-sm text-primary rounded-3" (click)="toggleTheme()">
-            <i *ngIf="is_dark_mode" class="fa-solid fa-sun"></i>
-            <i *ngIf="!is_dark_mode" class="fa-solid fa-moon"></i>
-        </button>
+        <div>
+            <a routerLink="/favorites" class="btn btn-light btn-sm text-primary rounded-3 me-1">
+                <i class="fa-solid fa-star me-1"></i>
+                My Favorites
+            </a>
+            <button class="btn btn-light btn-sm text-primary rounded-3" (click)="toggleTheme()">
+                <i *ngIf="is_dark_mode" class="fa-solid fa-sun"></i>
+                <i *ngIf="!is_dark_mode" class="fa-solid fa-moon"></i>
+            </button>
+        </div>
     </div>
 </nav>

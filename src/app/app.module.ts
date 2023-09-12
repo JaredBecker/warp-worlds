@@ -12,6 +12,7 @@ import { SharedModule } from '@shared/shared.module';
 import { ScrollToTopDirective } from './shared/directives/scroll-to-top.directive';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { HomeComponent } from './pages/home/home.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { HomeComponent } from './pages/home/home.component';
         ScrollToTopDirective,
         NavbarComponent,
         HomeComponent,
+        NotFoundComponent,
     ],
     imports: [
         BrowserModule,

@@ -14,6 +14,7 @@ import { FilterOptions } from '@shared/models/filter-options.interface';
 })
 export class CountryListingComponent implements OnInit, OnDestroy {
     @Input() public $countries_stream!: Observable<Country[]>;
+    @Input() public displaying_on: 'home' | 'favorites' = 'home';
 
     public countries: Country[] = [];
     public regions: Set<string> = new Set();

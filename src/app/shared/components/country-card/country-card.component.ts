@@ -56,10 +56,15 @@ export class CountryCardComponent implements OnInit, OnDestroy {
         }
     }
 
-    public selectFavorite(event: Event): void {
+    public onSelectFavorite(event: Event): void {
         // Stop the anchor tag opening modal or redirecting
         event.stopPropagation();
         this.select = this.select === 'Select' ? 'Selected' : 'Select';
         this.favoritesService.toggleCurrentlySelected(this.country);
+    }
+
+    public onRemoveFavorite(event: Event) {
+        event.stopPropagation();
+        this.favoritesService.removeFromFavorites(this.country.name.common);
     }
 }

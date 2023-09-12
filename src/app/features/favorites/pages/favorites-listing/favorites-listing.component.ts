@@ -1,14 +1,16 @@
-import { FavoritesService } from './../../../../shared/services/favorites.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Country } from '@shared/models/country.interface';
+import { Component, OnInit } from '@angular/core';
+
 import { Observable, map } from 'rxjs';
 
+import { Country } from '@shared/models/country.interface';
+import { FavoritesService } from '@shared/services/favorites.service';
+
 @Component({
-    selector: 'app-favorites',
-    templateUrl: './favorites.component.html',
-    styleUrls: ['./favorites.component.scss']
+    selector: 'app-favorites-listing',
+    templateUrl: './favorites-listing.component.html',
+    styleUrls: ['./favorites-listing.component.scss']
 })
-export class FavoritesComponent implements OnInit {
+export class FavoritesListingComponent implements OnInit {
     public $countries_stream!: Observable<Country[]>;
 
     constructor(

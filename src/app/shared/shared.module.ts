@@ -16,6 +16,7 @@ import { CurrentLocalTimePipe } from './pipes/local-time.pipe';
 import { SetActiveRegionDirective } from './directives/set-active-region.directive';
 import { CountryListingComponent } from './components/country-listing/country-listing.component';
 import { CountryInfoTableComponent } from './components/country-info-table/country-info-table.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     declarations: [
@@ -36,6 +37,7 @@ import { CountryInfoTableComponent } from './components/country-info-table/count
         NgbModule,
         FormsModule,
         ReactiveFormsModule,
+        HttpClientModule,
     ],
     exports: [
         NgbModule,
@@ -44,6 +46,7 @@ import { CountryInfoTableComponent } from './components/country-info-table/count
         CountryCardPlaceholderComponent,
         FormsModule,
         ReactiveFormsModule,
+        HttpClientModule,
         CountryListingComponent,
         CountryInfoTableComponent
     ]

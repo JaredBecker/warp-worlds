@@ -5,7 +5,7 @@ $primary: #a436f1;
 @import 'bootstrap/scss/bootstrap';
 @import './scss/';
 
-* {
+*, .Montserrat {
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -32,4 +32,20 @@ tr:last-child {
 // Override toastr default styles
 #toast-container {
     position: fixed;
+}
+
+
+// Override Angular Editor styles
+.angular-editor-toolbar {
+    padding: 0.5rem !important; // Have to use important to override base styling
+    border-radius: 0.75rem;
+}
+
+.angular-editor-textarea {
+    border-radius: 1rem;
+
+    img {
+        max-width: 450px;
+        border-radius: 1rem;
+    }
 }

@@ -39,11 +39,25 @@ tr:last-child {
 .angular-editor-toolbar {
     padding: 0.5rem !important; // Have to use important to override base styling
     border-radius: 0.75rem;
+    background-color: var(--bs-body-bg) !important;
+
+    button {
+        border-radius: 0.25rem;
+        color: #000 !important;
+        margin-right: 0.2rem;
+    }
 }
 
 .angular-editor-textarea {
     border-radius: 1rem;
 
+    img {
+        max-width: 450px;
+        border-radius: 1rem;
+    }
+}
+
+.comment_card {
     img {
         max-width: 450px;
         border-radius: 1rem;

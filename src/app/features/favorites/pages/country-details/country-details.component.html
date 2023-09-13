@@ -10,7 +10,7 @@
             <ng-template #customButtons let-executeCommandFn="executeCommandFn">
                 <ae-toolbar-set>
                     <ae-button
-                        iconClass="fa fa-html5"
+                        iconClass="fa-solid fa-image"
                         title="Angular editor logo"
                         (buttonClick)="executeCommandFn('insertHtml', angularEditorLogo())"
                     >
@@ -26,9 +26,24 @@
         </div>
         <ng-container *ngIf="comments && comments.length > 0">
             <div class="my-4">
-                <h4>Comments</h4>
-                <hr />
-                <div *ngFor="let comment of comments" class="card" [innerHTML]="comment"></div>
+                <h4 class="fw-bolder">Comments</h4>
+                <div *ngFor="let comment of comments" class="card comment_card rounded-4 p-3 mb-3">
+                    <div class="fw-bolder">
+                        <i class="fa-regular fa-clock"></i>
+                        Thur, 14 Sept, 16:20
+                    </div>
+                    <div [innerHTML]="comment"></div>
+                    <div class="d-flex justify-content-end gap-2">
+                        <button type="button" class="btn btn-primary btn-sm rounded-3">
+                            <i class="fa-solid fa-pencil"></i>
+                            Edit
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm rounded-3">
+                            <i class="fa-solid fa-trash"></i>
+                            Delete
+                        </button>
+                    </div>
+                </div>
             </div>
         </ng-container>
     </ng-container>

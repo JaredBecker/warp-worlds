@@ -39,7 +39,8 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
             ],
             [
                 'insertVideo',
-                'backgroundColor'
+                'insertImage',
+                'backgroundColor',
             ]
         ],
     };

@@ -19,6 +19,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     public country?: Country;
     public editor_content: SafeHtml = '';
     public comments?: SafeHtml[] = [];
+    public editing_index?: number
 
     public text_editor_config: AngularEditorConfig = {
         editable: true,
@@ -101,7 +102,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     }
 
     public isImage(url: string) {
-        return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
+        return /\.(jpg|jpeg|png|webp|gif|svg)$/.test(url);
     }
 
     public getComments() {
@@ -109,15 +110,33 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
 
         if (saved_comments) {
             const comments = JSON.parse(saved_comments) as SafeHtml[];
-            this.comments = comments;
+            this.comments = comments
         }
     }
 
-    public save() {
+    public onEditComment(index: number) {
+        const saved_comments = localStorage.getItem('saved_comments');
+
+        if (saved_comments) {
+            const comments = JSON.parse(saved_comments);
+            this.editor_content = comments[index];
+            this.editing_index = index;
+        }
+    }
+
+    public onSaveComment() {
         const saved_comments = localStorage.getItem('saved_comments');
         const comments = saved_comments ? JSON.parse(saved_comments) : [];
-        comments.push(this.editor_content);
+
+        if (this.editing_index !== undefined && this.editing_index >= 0) {
+            comments[this.editing_index] = this.editor_content;
+        } else {
+            comments.unshift(this.editor_content);
+        }
+
         this.comments = comments;
+        this.editor_content = '';
+        this.editing_index = undefined;
         localStorage.setItem('saved_comments', JSON.stringify(comments));
     }
 }

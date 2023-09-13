@@ -26,7 +26,6 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     imports: [
         BrowserModule,
         AppRoutingModule,
-        HttpClientModule,
         SharedModule,
         BrowserAnimationsModule,
         ToastrModule.forRoot({

@@ -124,6 +124,17 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
         }
     }
 
+    public onDeleteComment(index: number) {
+        const saved_comments = localStorage.getItem('saved_comments');
+
+        if (saved_comments) {
+            const comments = JSON.parse(saved_comments);
+            comments.splice(index, 1);
+            this.comments = comments;
+            localStorage.setItem('saved_comments', JSON.stringify(comments));
+        }
+    }
+
     public onSaveComment() {
         const saved_comments = localStorage.getItem('saved_comments');
         const comments = saved_comments ? JSON.parse(saved_comments) : [];

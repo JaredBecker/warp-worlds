@@ -1,0 +1,38 @@
+<table class="table">
+    <tbody>
+        <tr>
+            <th class="fw-bolder">Capital</th>
+            <td>{{ country.capital }}</td>
+        </tr>
+        <tr>
+            <th class="fw-bolder">Region</th>
+            <td>{{ country.region }}</td>
+        </tr>
+        <tr>
+            <th class="fw-bolder">Languages</th>
+            <td>{{ country.languages | language }}</td>
+        </tr>
+        <tr>
+            <th class="fw-bolder">Currency</th>
+            <td>{{ country.currencies | currencyObjectValues }}</td>
+        </tr>
+        <tr>
+            <th class="fw-bolder">Population</th>
+            <td>{{ country.population | number }}</td>
+        </tr>
+        <tr>
+            <th class="fw-bolder">FIFA Code</th>
+            <td>{{ country.fifa !== '' ? country.fifa : 'Not Set' }}</td>
+        </tr>
+        <tr>
+            <th class="fw-bolder">Time</th>
+            <td>{{ country.timezones[0] | currentLocalTime }}</td>
+        </tr>
+        <tr *ngIf="country.coatOfArms.png || country.coatOfArms.svg">
+            <th class="fw-bolder">Coat Of Arms</th>
+            <td>
+                <img width="35" [src]="country.coatOfArms.png ? country.coatOfArms.png : country.coatOfArms.svg" [alt]="country.name.official + ' coat of arms'" />
+            </td>
+        </tr>
+    </tbody>
+</table>

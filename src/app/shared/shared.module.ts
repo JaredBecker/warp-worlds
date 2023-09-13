@@ -15,6 +15,7 @@ import { LanguagePipe } from './pipes/language.pipe';
 import { CurrentLocalTimePipe } from './pipes/local-time.pipe';
 import { SetActiveRegionDirective } from './directives/set-active-region.directive';
 import { CountryListingComponent } from './components/country-listing/country-listing.component';
+import { CountryInfoTableComponent } from './components/country-info-table/country-info-table.component';
 
 @NgModule({
     declarations: [
@@ -27,6 +28,7 @@ import { CountryListingComponent } from './components/country-listing/country-li
         CurrentLocalTimePipe,
         SetActiveRegionDirective,
         CountryListingComponent,
+        CountryInfoTableComponent,
     ],
     imports: [
         CommonModule,
@@ -43,6 +45,7 @@ import { CountryListingComponent } from './components/country-listing/country-li
         FormsModule,
         ReactiveFormsModule,
         CountryListingComponent,
+        CountryInfoTableComponent
     ]
 })
 export class SharedModule { }

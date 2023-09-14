@@ -1,3 +1,4 @@
+import { CountryComment } from "./comment.interface";
 import { CurrenciesObject } from "./currencies-object.interface";
 
 export interface Country {
@@ -21,4 +22,5 @@ export interface Country {
     population: number;
     fifa: string;
     timezones: string[];
+    comments?: CountryComment[];
 }

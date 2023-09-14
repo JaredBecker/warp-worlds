@@ -1,18 +1,20 @@
 import { Injectable } from '@angular/core';
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, count } from 'rxjs';
 
 import { ToastrService } from 'ngx-toastr';
 
 import { Country } from '@shared/models/country.interface';
+import { CountryComment } from '@shared/models/comment.interface';
+import { SafeHtml } from '@angular/platform-browser';
 
 @Injectable({
     providedIn: 'root'
 })
 export class FavoritesService {
-    private _currently_selected: {[key: string]: Country} = {};
+    private _currently_selected: { [key: string]: Country } = {};
 
-    private _$favorite_countries: BehaviorSubject<{[key: string]: Country}> = new BehaviorSubject({});
+    private _$favorite_countries: BehaviorSubject<{ [key: string]: Country }> = new BehaviorSubject({});
     private _$currently_selected_count: BehaviorSubject<number> = new BehaviorSubject(0);
 
     constructor(
@@ -27,7 +29,7 @@ export class FavoritesService {
      *
      * @returns Stream of favorite countries
      */
-    public getFavoriteCountriesStream(): Observable<{[key: string]: Country}> {
+    public getFavoriteCountriesStream(): Observable<{ [key: string]: Country }> {
         return this._$favorite_countries.asObservable();
     }
 
@@ -38,6 +40,24 @@ export class FavoritesService {
      */
     public getCurrentlySelectedCountStream(): Observable<number> {
         return this._$currently_selected_count.asObservable();
+    }
+
+    /**
+     * Checks localStorage for the favorite country and returns it
+     *
+     * @param common_name The common name of the country to lookup in localStorage
+     *
+     * @returns Country if found or undefined
+     */
+    public getFavoriteCountry(common_name: string): Country | undefined {
+        const favorite_countries = this.getFavoriteCountries();
+        const formatted_name = common_name.replaceAll(' ', '');
+
+        if (favorite_countries[formatted_name]) {
+            return favorite_countries[formatted_name];
+        }
+
+        return;
     }
 
     /**
@@ -124,12 +144,47 @@ export class FavoritesService {
         }
     }
 
+    public saveComment(common_name: string, comment_content: SafeHtml, editing_index: number | undefined): void {
+        const favorite_countries = this.getFavoriteCountries();
+        const formatted_name = common_name.replaceAll(' ', '');
+
+        if (favorite_countries[formatted_name]) {
+            const country = favorite_countries[formatted_name];
+
+            // Check if a comment is being edited
+            if (editing_index !== undefined && editing_index >= 0) {
+                if (country.comments) {
+                    // Reuse the posted date if editing
+                    country.comments[editing_index] = {
+                        posted: country.comments[editing_index].posted,
+                        html: comment_content
+                    }
+                }
+            } else {
+                // Create new comment array if one if not yet defined
+                if (!country.comments) {
+                    country.comments = [];
+                }
+
+                // unshift to make sure newest comments are always at the top
+                country.comments.unshift({
+                    posted: new Date().toISOString(),
+                    html: comment_content,
+                });
+            }
+
+            favorite_countries[formatted_name] = country;
+            this.setFavoriteCountries(favorite_countries);
+            this._$favorite_countries.next(favorite_countries);
+        }
+    }
+
     /**
      * Gets favorite countries from local storage
      *
      * @returns Favorite countries
      */
-    private getFavoriteCountries(): {[key: string]: Country} {
+    private getFavoriteCountries(): { [key: string]: Country } {
         const favorite_countries = localStorage.getItem('favorite_countries');
 
         return favorite_countries ? JSON.parse(favorite_countries) : {};
@@ -140,7 +195,7 @@ export class FavoritesService {
      *
      * @param favorite_countries value to store
      */
-    private setFavoriteCountries(favorite_countries: {[key: string]: Country}) {
+    private setFavoriteCountries(favorite_countries: { [key: string]: Country }) {
         localStorage.setItem('favorite_countries', JSON.stringify(favorite_countries));
     }
 }

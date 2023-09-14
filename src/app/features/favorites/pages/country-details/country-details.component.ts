@@ -1,14 +1,15 @@
+import { FavoritesService } from '@shared/services/favorites.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SafeHtml } from '@angular/platform-browser';
 
-import { Subscription, switchMap, throwError } from 'rxjs';
+import { Subscription, switchMap } from 'rxjs';
 
+import { ToastrService } from 'ngx-toastr';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 import { Country } from '@shared/models/country.interface';
-import { CountryService } from '@shared/services/country.service';
-
+import { CountryComment } from '@shared/models/comment.interface';
 @Component({
     selector: 'app-country-details',
     templateUrl: './country-details.component.html',
@@ -17,9 +18,11 @@ import { CountryService } from '@shared/services/country.service';
 export class CountryDetailsComponent implements OnInit, OnDestroy {
     public is_loading: boolean = true;
     public country?: Country;
+    public country_name!: string;
     public editor_content: SafeHtml = '';
-    public comments?: SafeHtml[] = [];
-    public editing_index?: number
+    public comments?: CountryComment[] = [];
+    public editing_index?: number;
+    public posted_dated?: string;
 
     public text_editor_config: AngularEditorConfig = {
         editable: true,
@@ -49,9 +52,10 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     private _country_subscription?: Subscription;
 
     constructor(
-        private countryService: CountryService,
-        private activatedRoute: ActivatedRoute,
         private router: Router,
+        private toastrService: ToastrService,
+        private favoritesService: FavoritesService,
+        private activatedRoute: ActivatedRoute,
     ) { }
 
     public ngOnInit(): void {
@@ -60,20 +64,26 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
         this._country_subscription = this.activatedRoute.paramMap
             .pipe(
                 switchMap((params) => {
-                    const country_name = params.get('country-name');
+                    this.country_name = params.get('country-name') ?? '';
 
-                    if (country_name) {
-                        // Get request throws actual error if the name is incorrect
-                        return this.countryService.getSingleCounty(country_name);
-                    }
-
-                    // Making sure observable is returned if no name is set
-                    return throwError(() => new Error())
-                })
+                    return this.favoritesService.getFavoriteCountriesStream();
+                }),
             )
             .subscribe({
-                next: (country) => {
-                    this.country = country;
+                next: (favorite_countries) => {
+                    if (favorite_countries) {
+                        if (this.country_name !== '') {
+                            const formatted_name = this.country_name.replaceAll(' ', '');
+
+                            if (favorite_countries[formatted_name]) {
+                                this.country = favorite_countries[formatted_name];
+                            } else {
+                                this.navigateToHomePage();
+                            }
+                        } else {
+                            this.navigateToHomePage();
+                        }
+                    }
                 },
                 error: () => {
                     this.router.navigateByUrl('/not-found', {
@@ -91,27 +101,18 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
         const img_url = prompt('Gimme URL');
 
         if (img_url) {
-            if (this.isImage(img_url)) {
-                return `<img src="${img_url}"/>`
+            if (this.validateImage(img_url)) {
+                return `<img src="${img_url}" />`
             } else {
                 alert('This no be an image')
             }
         }
 
-        return
-    }
-
-    public isImage(url: string) {
-        return /\.(jpg|jpeg|png|webp|gif|svg)$/.test(url);
+        return;
     }
 
     public getComments() {
-        const saved_comments = localStorage.getItem('saved_comments');
-
-        if (saved_comments) {
-            const comments = JSON.parse(saved_comments) as SafeHtml[];
-            this.comments = comments
-        }
+        this.comments = this.country?.comments;
     }
 
     public onEditComment(index: number) {
@@ -136,18 +137,32 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     }
 
     public onSaveComment() {
-        const saved_comments = localStorage.getItem('saved_comments');
-        const comments = saved_comments ? JSON.parse(saved_comments) : [];
+        if (!this.country) return;
 
-        if (this.editing_index !== undefined && this.editing_index >= 0) {
-            comments[this.editing_index] = this.editor_content;
+        let comments: CountryComment[] | undefined;
+
+        if (this.editor_content !== '') {
+            this.favoritesService.saveComment(
+                this.country.name.common,
+                this.editor_content,
+                this.editing_index
+            );
         } else {
-            comments.unshift(this.editor_content);
+            alert('Please make sure to add content within the comment. Only whitespace is not permitted');
+            return;
         }
 
         this.comments = comments;
         this.editor_content = '';
         this.editing_index = undefined;
-        localStorage.setItem('saved_comments', JSON.stringify(comments));
+    }
+
+    private validateImage(url: string) {
+        return /\.(jpg|jpeg|png|webp|gif|svg)$/.test(url);
+    }
+
+    private navigateToHomePage() {
+        this.router.navigateByUrl('/');
+        this.toastrService.error(`No country with ${this.country_name} could be found in your favorites list.`, 'Failed to load country');
     }
 }

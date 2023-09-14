@@ -24,15 +24,15 @@
                 Save Comment
             </button>
         </div>
-        <ng-container *ngIf="comments && comments.length > 0">
+        <ng-container *ngIf="country.comments && country.comments.length > 0">
             <div class="my-4">
                 <h4 class="fw-bolder">Comments</h4>
-                <div *ngFor="let comment of comments; let i = index" class="card comment_card rounded-4 p-3 mb-3">
+                <div *ngFor="let comment of country.comments; let i = index" class="card comment_card rounded-4 p-3 mb-3">
                     <div class="fw-bolder pb-2">
                         <i class="fa-regular fa-clock"></i>
-                        Thur, 14 Sept, 16:20
+                        {{ comment.posted | date:'EEE, dd MMM hh:mm' }}
                     </div>
-                    <div [innerHTML]="comment"></div>
+                    <div [innerHTML]="comment.html"></div>
                     <div class="d-flex justify-content-end gap-2 pt-2">
                         <button (click)="onEditComment(i)" type="button" class="btn btn-primary btn-sm rounded-3">
                             <i class="fa-solid fa-pencil"></i>

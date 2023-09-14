@@ -158,7 +158,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     }
 
     private validateImage(url: string) {
-        return /\.(jpg|jpeg|png|webp|gif|svg)$/.test(url);
+        return /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(url);
     }
 
     private navigateToHomePage() {

@@ -1,0 +1,50 @@
+<div class="my-5">
+    <ng-container *ngIf="country">
+        <h1 class="fw-bolder">{{ country.name.official }}</h1>
+        <hr />
+        <app-country-info-table [country]="country" />
+
+        <h4 class="fw-bolder mt-5">Leave a comment</h4>
+        <p>For even more customization use the <i class="fa-solid fa-code"></i> icon to edit the raw HTML!</p>
+        <angular-editor [config]="text_editor_config" [(ngModel)]="editor_content">
+            <ng-template #customButtons let-executeCommandFn="executeCommandFn">
+                <ae-toolbar-set>
+                    <ae-button
+                        iconClass="fa-solid fa-image"
+                        title="Angular editor logo"
+                        (buttonClick)="executeCommandFn('insertHtml', uploadCustomImage())"
+                    >
+                    </ae-button>
+                </ae-toolbar-set>
+            </ng-template>
+        </angular-editor>
+        <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-primary rounded-4 mt-2" (click)="onSaveComment()">
+                <i class="fa-regular fa-floppy-disk me-1"></i>
+                Save Comment
+            </button>
+        </div>
+        <ng-container *ngIf="country.comments && country.comments.length > 0">
+            <div class="my-4">
+                <h4 class="fw-bolder">Comments</h4>
+                <div *ngFor="let comment of country.comments; let i = index" class="card comment_card rounded-4 p-3 mb-3">
+                    <div class="fw-bolder pb-2">
+                        <i class="fa-regular fa-clock"></i>
+                        {{ comment.posted | date:'EEE, dd MMM hh:mm' }}
+                    </div>
+                    <div [innerHTML]="comment.html"></div>
+                    <div class="d-flex justify-content-end gap-2 pt-2">
+                        <button (click)="onEditComment(i)" type="button" class="btn btn-primary btn-sm rounded-3">
+                            <i class="fa-solid fa-pencil"></i>
+                            Edit
+                        </button>
+                        <button (click)="onDeleteComment(i)" type="button" class="btn btn-danger btn-sm rounded-3">
+                            <i class="fa-solid fa-trash"></i>
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+</div>

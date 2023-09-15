@@ -7,6 +7,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Country } from '@shared/models/country.interface';
 import { CountryModalComponent } from '@shared/components/country-modal/country-modal.component';
 import { FavoritesService } from '@shared/services/favorites.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-country-card',
@@ -24,6 +25,7 @@ export class CountryCardComponent implements OnInit, OnDestroy {
     constructor(
         private modalService: NgbModal,
         private favoritesService: FavoritesService,
+        private router: Router,
     ) { }
 
     public ngOnInit(): void {
@@ -52,7 +54,7 @@ export class CountryCardComponent implements OnInit, OnDestroy {
             const modalRef = this.modalService.open(CountryModalComponent);
             modalRef.componentInstance.country = this.country;
         } else {
-            console.log('navigate by url on fav page');
+            this.router.navigate(['/favorites/view', this.country.name.common]);
         }
     }
 

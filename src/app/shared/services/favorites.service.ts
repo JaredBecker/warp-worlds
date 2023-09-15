@@ -179,6 +179,17 @@ export class FavoritesService {
         }
     }
 
+    public deleteComment(common_name: string, index: number) {
+        const favorite_countries = this.getFavoriteCountries();
+        const formatted_name = common_name.replaceAll(' ', '');
+
+        if (favorite_countries[formatted_name]?.comments?.[index]) {
+            favorite_countries[formatted_name]?.comments?.splice(index, 1);
+            this.setFavoriteCountries(favorite_countries);
+            this._$favorite_countries.next(favorite_countries);
+        }
+    }
+
     /**
      * Gets favorite countries from local storage
      *

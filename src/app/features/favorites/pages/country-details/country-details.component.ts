@@ -9,18 +9,15 @@ import { ToastrService } from 'ngx-toastr';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 import { Country } from '@shared/models/country.interface';
-import { CountryComment } from '@shared/models/comment.interface';
 @Component({
     selector: 'app-country-details',
     templateUrl: './country-details.component.html',
     styleUrls: ['./country-details.component.scss']
 })
 export class CountryDetailsComponent implements OnInit, OnDestroy {
-    public is_loading: boolean = true;
     public country?: Country;
     public country_name!: string;
     public editor_content: SafeHtml = '';
-    public comments?: CountryComment[] = [];
     public editing_index?: number;
     public posted_dated?: string;
 
@@ -59,8 +56,6 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void {
-        this.getComments();
-
         this._country_subscription = this.activatedRoute.paramMap
             .pipe(
                 switchMap((params) => {
@@ -85,11 +80,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
                         }
                     }
                 },
-                error: () => {
-                    this.router.navigateByUrl('/not-found', {
-                        skipLocationChange: true,
-                    })
-                }
+                error: () => this.router.navigateByUrl('/not-found', { skipLocationChange: true }),
             });
     }
 
@@ -97,49 +88,41 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
         this._country_subscription?.unsubscribe();
     }
 
-    public angularEditorLogo(): string | undefined {
+    public uploadCustomImage(): void {
         const img_url = prompt('Gimme URL');
 
         if (img_url) {
-            if (this.validateImage(img_url)) {
-                return `<img src="${img_url}" />`
-            } else {
-                alert('This no be an image')
-            }
+            this.validateImageURL(img_url).then((valid) => {
+                if (valid) {
+                    this.editor_content += `<img src="${img_url}" />`;
+                } else {
+                    alert('This no be an image');
+                }
+            });
         }
 
         return;
     }
 
-    public getComments() {
-        this.comments = this.country?.comments;
-    }
-
-    public onEditComment(index: number) {
-        const saved_comments = localStorage.getItem('saved_comments');
-
-        if (saved_comments) {
-            const comments = JSON.parse(saved_comments);
-            this.editor_content = comments[index];
-            this.editing_index = index;
-        }
-    }
-
-    public onDeleteComment(index: number) {
-        const saved_comments = localStorage.getItem('saved_comments');
-
-        if (saved_comments) {
-            const comments = JSON.parse(saved_comments);
-            comments.splice(index, 1);
-            this.comments = comments;
-            localStorage.setItem('saved_comments', JSON.stringify(comments));
-        }
-    }
-
-    public onSaveComment() {
+    public onEditComment(index: number): void {
         if (!this.country) return;
 
-        let comments: CountryComment[] | undefined;
+        if (this.country.comments && this.country.comments[index]) {
+            this.editing_index = index;
+            this.editor_content = this.country.comments[index].html;
+        }
+    }
+
+    public onDeleteComment(index: number): void {
+        if (!this.country) return;
+
+        if (this.country.comments && this.country.comments[index]) {
+            this.favoritesService.deleteComment(this.country_name, index);
+        }
+    }
+
+    public onSaveComment(): void {
+        if (!this.country) return;
 
         if (this.editor_content !== '') {
             this.favoritesService.saveComment(
@@ -147,21 +130,29 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
                 this.editor_content,
                 this.editing_index
             );
+
+            this.toastrService.success(`Comment added to ${this.country.name.common}`, 'Success!')
         } else {
-            alert('Please make sure to add content within the comment. Only whitespace is not permitted');
+            this.toastrService.error('Please make sure there is content within the comment before saving', 'Failed!')
             return;
         }
 
-        this.comments = comments;
         this.editor_content = '';
         this.editing_index = undefined;
     }
 
-    private validateImage(url: string) {
-        return /\.(jpg|jpeg|png|webp|gif|svg)(\?.*)?$/i.test(url);
+    private async validateImageURL(url: string): Promise<boolean> {
+        const img_url_valid = await new Promise<boolean>((res, rej) => {
+            const image = new Image();
+            image.onload = () => res(true);
+            image.onerror = () => res(false);
+            image.src = url;
+        });
+
+        return img_url_valid;
     }
 
-    private navigateToHomePage() {
+    private navigateToHomePage(): void {
         this.router.navigateByUrl('/');
         this.toastrService.error(`No country with ${this.country_name} could be found in your favorites list.`, 'Failed to load country');
     }

@@ -5,12 +5,13 @@ import { SafeHtml } from '@angular/platform-browser';
 import { Subscription, switchMap } from 'rxjs';
 
 import { ToastrService } from 'ngx-toastr';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 import { Country } from '@shared/models/country.interface';
 import { FavoritesService } from '@shared/services/favorites.service';
 import { DeleteModalComponent } from '@features/favorites/components/delete-modal/delete-modal.component';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ImageUploadModalComponent } from '@features/favorites/components/image-upload-modal/image-upload-modal.component';
 
 @Component({
     selector: 'app-country-details',
@@ -22,7 +23,6 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     public country_name!: string;
     public editor_content: SafeHtml = '';
     public editing_index?: number;
-    public posted_dated?: string;
 
     public text_editor_config: AngularEditorConfig = {
         editable: true,
@@ -32,19 +32,23 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
         placeholder: 'Enter comment here...',
         defaultParagraphSeparator: 'p',
         defaultFontSize: '3',
-        fonts: [{
-            name: 'Montserrat', class: 'Montserrat'
-        }],
+        fonts: [
+            { name: 'Montserrat', class: 'Montserrat' }
+        ],
         toolbarHiddenButtons: [
             [
                 'subscript',
                 'superscript',
-                'fontName'
+                'fontName',
+                'indent',
+                'outdent',
             ],
             [
                 'insertVideo',
                 'insertImage',
                 'backgroundColor',
+                'link',
+                'unlink',
             ]
         ],
     };
@@ -76,12 +80,12 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
 
                             if (favorite_countries[formatted_name]) {
                                 this.country = favorite_countries[formatted_name];
-                            } else {
-                                this.navigateToHomePage();
+
+                                return;
                             }
-                        } else {
-                            this.navigateToHomePage();
                         }
+
+                        this.navigateToHomePage();
                     }
                 },
                 error: () => this.router.navigateByUrl('/not-found', { skipLocationChange: true }),
@@ -93,17 +97,13 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     }
 
     public uploadCustomImage(): void {
-        const img_url = prompt('Gimme URL');
+        const modalRef = this.modalService.open(ImageUploadModalComponent);
 
-        if (img_url) {
-            this.validateImageURL(img_url).then((valid) => {
-                if (valid) {
-                    this.editor_content += `<img src="${img_url}" />`;
-                } else {
-                    alert('This no be an image');
-                }
-            });
-        }
+        modalRef.result.then((img_markup: string | undefined) => {
+            if (img_markup) {
+                this.editor_content += img_markup
+            }
+        });
 
         return;
     }
@@ -156,22 +156,6 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
         // Reset fields
         this.editor_content = '';
         this.editing_index = undefined;
-    }
-
-    /**
-     * Tries to load url to make sure the URL provided is actually valid
-     *
-     * @param url The URL to load the image from
-     *
-     * @returns Promise indicating if its valid or not
-     */
-    private validateImageURL(url: string): Promise<boolean> {
-        return new Promise<boolean>((res) => {
-            const image = new Image();
-            image.onload = () => res(true);
-            image.onerror = () => res(false);
-            image.src = url;
-        });
     }
 
     private navigateToHomePage(): void {

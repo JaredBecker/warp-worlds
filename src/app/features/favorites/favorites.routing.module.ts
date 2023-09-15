@@ -1,12 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { FavoritesComponent } from './pages/favorites/favorites.component';
+import { CountryDetailsComponent } from './pages/country-details/country-details.component';
+import { FavoritesListingComponent } from './pages/favorites-listing/favorites-listing.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: FavoritesComponent,
+        children: [
+            {
+                path: 'view-all',
+                component: FavoritesListingComponent
+            },
+            {
+                path: 'view/:country-name',
+                component: CountryDetailsComponent
+            },
+        ]
     },
 ];
 

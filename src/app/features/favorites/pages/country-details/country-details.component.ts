@@ -1,4 +1,3 @@
-import { FavoritesService } from '@shared/services/favorites.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SafeHtml } from '@angular/platform-browser';
@@ -9,6 +8,10 @@ import { ToastrService } from 'ngx-toastr';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 
 import { Country } from '@shared/models/country.interface';
+import { FavoritesService } from '@shared/services/favorites.service';
+import { DeleteModalComponent } from '@features/favorites/components/delete-modal/delete-modal.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 @Component({
     selector: 'app-country-details',
     templateUrl: './country-details.component.html',
@@ -53,6 +56,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
         private toastrService: ToastrService,
         private favoritesService: FavoritesService,
         private activatedRoute: ActivatedRoute,
+        private modalService: NgbModal,
     ) { }
 
     public ngOnInit(): void {
@@ -114,11 +118,18 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
     }
 
     public onDeleteComment(index: number): void {
-        if (!this.country) return;
+        const modalRef = this.modalService.open(DeleteModalComponent);
 
-        if (this.country.comments && this.country.comments[index]) {
-            this.favoritesService.deleteComment(this.country_name, index);
-        }
+        modalRef.result.then((should_delete) => {
+            if (should_delete) {
+                if (this.country) {
+                    if (this.country.comments && this.country.comments[index]) {
+                        this.favoritesService.deleteComment(this.country_name, index);
+                        this.toastrService.success('Comment deleted successfully', 'Success!');
+                    }
+                }
+            }
+        });
     }
 
     public onSaveComment(): void {
@@ -131,25 +142,36 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
                 this.editing_index
             );
 
-            this.toastrService.success(`Comment added to ${this.country.name.common}`, 'Success!')
+            // Check if editing to change out success message
+            if (this.editing_index !== undefined) {
+                this.toastrService.success(`Comment has been updated`, 'Success!')
+            } else {
+                this.toastrService.success(`Comment added to ${this.country.name.common}`, 'Success!')
+            }
         } else {
             this.toastrService.error('Please make sure there is content within the comment before saving', 'Failed!')
             return;
         }
 
+        // Reset fields
         this.editor_content = '';
         this.editing_index = undefined;
     }
 
-    private async validateImageURL(url: string): Promise<boolean> {
-        const img_url_valid = await new Promise<boolean>((res, rej) => {
+    /**
+     * Tries to load url to make sure the URL provided is actually valid
+     *
+     * @param url The URL to load the image from
+     *
+     * @returns Promise indicating if its valid or not
+     */
+    private validateImageURL(url: string): Promise<boolean> {
+        return new Promise<boolean>((res) => {
             const image = new Image();
             image.onload = () => res(true);
             image.onerror = () => res(false);
             image.src = url;
         });
-
-        return img_url_valid;
     }
 
     private navigateToHomePage(): void {

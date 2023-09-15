@@ -2,8 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 import { Subscription } from 'rxjs';
 
-import * as AOS from 'aos';
-
 import { FavoritesService } from './shared/services/favorites.service';
 
 @Component({
@@ -21,8 +19,6 @@ export class AppComponent implements OnInit, OnDestroy {
     ) { }
 
     public ngOnInit(): void {
-        AOS.init();
-
         this._currently_selected_sub = this.favoritesService
             .getCurrentlySelectedCountStream()
             .subscribe({

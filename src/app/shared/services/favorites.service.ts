@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
+import { SafeHtml } from '@angular/platform-browser';
 
-import { BehaviorSubject, Observable, count } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { ToastrService } from 'ngx-toastr';
 
 import { Country } from '@shared/models/country.interface';
-import { CountryComment } from '@shared/models/comment.interface';
-import { SafeHtml } from '@angular/platform-browser';
 
 @Injectable({
     providedIn: 'root'
@@ -43,24 +42,6 @@ export class FavoritesService {
     }
 
     /**
-     * Checks localStorage for the favorite country and returns it
-     *
-     * @param common_name The common name of the country to lookup in localStorage
-     *
-     * @returns Country if found or undefined
-     */
-    public getFavoriteCountry(common_name: string): Country | undefined {
-        const favorite_countries = this.getFavoriteCountries();
-        const formatted_name = common_name.replaceAll(' ', '');
-
-        if (favorite_countries[formatted_name]) {
-            return favorite_countries[formatted_name];
-        }
-
-        return;
-    }
-
-    /**
      * Clears the values in currently selected and resets the count
      */
     public clearCurrentlySelected(): void {
@@ -82,7 +63,6 @@ export class FavoritesService {
         } else {
             favorite_countries[formatted_name] = country;
             this.setFavoriteCountries(favorite_countries);
-            this._$favorite_countries.next(favorite_countries);
             this.toastrService.success(`${country.name.common} has been added to your favorites list.`, 'Added To Favorites');
         }
     }
@@ -100,7 +80,6 @@ export class FavoritesService {
             const name = favorite_countries[formatted_name].name.common;
             delete favorite_countries[formatted_name];
             this.setFavoriteCountries(favorite_countries);
-            this._$favorite_countries.next(favorite_countries);
             this.toastrService.success(`${name} has been removed from your favorites list.`, 'Removed From Favorites');
         } else {
             this.toastrService.error(`${common_name} was found in your favorite list.`, 'Failed To Delete');
@@ -133,17 +112,25 @@ export class FavoritesService {
             const favorite_countries = this.getFavoriteCountries();
 
             for (const key in this._currently_selected) {
-                favorite_countries[key] = this._currently_selected[key];
+                // Check to see that the country is not already in favorites to preserve potential comments
+                if (!favorite_countries[key]) {
+                    favorite_countries[key] = this._currently_selected[key];
+                }
             }
 
             this.setFavoriteCountries(favorite_countries);
-            this._$favorite_countries.next(favorite_countries);
-            this._currently_selected = {};
-            this._$currently_selected_count.next(0);
+            this.clearCurrentlySelected();
             this.toastrService.success('All selected countries have been added to your favorites list', 'Updated Favorites');
         }
     }
 
+    /**
+     * Can save new comments or update existing ones
+     *
+     * @param common_name Common name of the country to add the country to
+     * @param comment_content HTML content from comment editor
+     * @param editing_index The index of the comment being edited if editing
+     */
     public saveComment(common_name: string, comment_content: SafeHtml, editing_index: number | undefined): void {
         const favorite_countries = this.getFavoriteCountries();
         const formatted_name = common_name.replaceAll(' ', '');
@@ -175,10 +162,15 @@ export class FavoritesService {
 
             favorite_countries[formatted_name] = country;
             this.setFavoriteCountries(favorite_countries);
-            this._$favorite_countries.next(favorite_countries);
         }
     }
 
+    /**
+     * Deletes a comment from the countries comment list
+     *
+     * @param common_name Common name of the country to remove the comment from
+     * @param index The index of the comment being deleted from the comment array
+     */
     public deleteComment(common_name: string, index: number) {
         const favorite_countries = this.getFavoriteCountries();
         const formatted_name = common_name.replaceAll(' ', '');
@@ -186,7 +178,6 @@ export class FavoritesService {
         if (favorite_countries[formatted_name]?.comments?.[index]) {
             favorite_countries[formatted_name]?.comments?.splice(index, 1);
             this.setFavoriteCountries(favorite_countries);
-            this._$favorite_countries.next(favorite_countries);
         }
     }
 
@@ -208,6 +199,7 @@ export class FavoritesService {
      */
     private setFavoriteCountries(favorite_countries: { [key: string]: Country }) {
         localStorage.setItem('favorite_countries', JSON.stringify(favorite_countries));
+        this._$favorite_countries.next(favorite_countries);
     }
 }
 

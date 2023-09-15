@@ -7,11 +7,15 @@ import { SharedModule } from '@shared/shared.module';
 import { FavoritesRoutingModule } from './favorites.routing.module';
 import { CountryDetailsComponent } from './pages/country-details/country-details.component';
 import { FavoritesListingComponent } from './pages/favorites-listing/favorites-listing.component';
+import { DeleteModalComponent } from './components/delete-modal/delete-modal.component';
+import { ImageUploadModalComponent } from './components/image-upload-modal/image-upload-modal.component';
 
 @NgModule({
     declarations: [
         CountryDetailsComponent,
-        FavoritesListingComponent
+        FavoritesListingComponent,
+        DeleteModalComponent,
+        ImageUploadModalComponent,
     ],
     imports: [
         CommonModule,

@@ -1,0 +1,30 @@
+<div class="position-relative">
+    <div class="overlay" [ngClass]="{'d-flex': is_loading, 'd-none': !is_loading}">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <span class="fw-bolder overlay_text">Checking Image</span>
+    </div>
+    <div class="modal-header">
+        <h4 class="modal-title">Image URL</h4>
+        <button
+            type="button"
+            class="btn-close"
+            aria-describedby="modal-title"
+            (click)="modal.close(false)"
+        ></button>
+    </div>
+    <div class="modal-body">
+        <p>Paste in any image URL</p>
+        <input
+            type="text"
+            [formControl]="image_url"
+            class="form-control rounded-4"
+            placeholder="Enter Image URL..."
+        />
+        <div *ngIf="not_valid_url" class="fw-bolder mt-3">
+            <i class="fa-regular fa-circle-xmark text-danger me-1"></i>
+            Image url is not valid!
+        </div>
+    </div>
+</div>

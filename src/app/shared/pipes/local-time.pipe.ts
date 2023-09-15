@@ -13,6 +13,6 @@ export class CurrentLocalTimePipe implements PipeTransform {
         const country_offset = moment.utc().utcOffset(value).utcOffset();
         const output = moment().utc().utcOffset(local_offset + country_offset).format('LT');
 
-        return output;
+        return `${output} - ${value}`;
     }
 }

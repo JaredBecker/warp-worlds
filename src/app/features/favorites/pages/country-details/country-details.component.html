@@ -30,7 +30,7 @@
                 <div *ngFor="let comment of country.comments; let i = index" class="card comment_card rounded-4 p-3 mb-3">
                     <div class="fw-bolder pb-2">
                         <i class="fa-regular fa-clock"></i>
-                        {{ comment.posted | date:'EEE, dd MMM hh:mm' }}
+                        {{ comment.posted | date:'EEE, dd MMMM y h:mma' }}
                     </div>
                     <div [innerHTML]="comment.html"></div>
                     <div class="d-flex justify-content-end gap-2 pt-2">

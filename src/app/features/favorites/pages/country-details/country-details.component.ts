@@ -16,7 +16,6 @@ import { ImageUploadModalComponent } from '@features/favorites/components/image-
 @Component({
     selector: 'app-country-details',
     templateUrl: './country-details.component.html',
-    styleUrls: ['./country-details.component.scss']
 })
 export class CountryDetailsComponent implements OnInit, OnDestroy {
     public country?: Country;
@@ -104,8 +103,6 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
                 this.editor_content += img_markup
             }
         });
-
-        return;
     }
 
     public onEditComment(index: number): void {

@@ -8,13 +8,12 @@ import { FavoritesService } from '@shared/services/favorites.service';
 @Component({
     selector: 'app-favorites-listing',
     templateUrl: './favorites-listing.component.html',
-    styleUrls: ['./favorites-listing.component.scss']
 })
 export class FavoritesListingComponent implements OnInit {
     public $countries_stream!: Observable<Country[]>;
 
     constructor(
-        private favoritesService: FavoritesService
+        private favoritesService: FavoritesService,
     ) { }
 
     public ngOnInit(): void {

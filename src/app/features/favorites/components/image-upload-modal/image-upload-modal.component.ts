@@ -35,6 +35,8 @@ export class ImageUploadModalComponent implements OnInit, OnDestroy {
                         this.validateImageURL(url).then((valid) => {
                             if (valid) {
                                 this.modal.close(`<img src="${url}">`);
+
+                                return;
                             }
 
                             this.is_loading = false;

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SafeHtml } from '@angular/platform-browser';
+import { SafeHtml, Title } from '@angular/platform-browser';
 
 import { Subscription, switchMap } from 'rxjs';
 
@@ -60,6 +60,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
         private favoritesService: FavoritesService,
         private activatedRoute: ActivatedRoute,
         private modalService: NgbModal,
+        private titleService: Title,
     ) { }
 
     public ngOnInit(): void {
@@ -67,6 +68,7 @@ export class CountryDetailsComponent implements OnInit, OnDestroy {
             .pipe(
                 switchMap((params) => {
                     this.country_name = params.get('country-name') ?? '';
+                    this.titleService.setTitle(`Warp-Worlds | ${this.country_name}`);
 
                     return this.favoritesService.getFavoriteCountriesStream();
                 }),

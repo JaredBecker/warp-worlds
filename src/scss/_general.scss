@@ -1,0 +1,30 @@
+// General styles
+*, .Montserrat {
+    font-family: 'Montserrat', sans-serif;
+}
+
+// Override bootstraps default styles
+.modal-content {
+    border-radius: 1rem;
+    padding: 1rem;
+    overflow: hidden;
+}
+
+tr:last-child {
+    border-bottom: 0px transparent;
+}
+
+.dropdown-menu {
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+
+    .dropdown-item {
+        border-radius: 0.5rem;
+        margin-bottom: 0.25rem;
+    }
+}
+
+// Override toastr default styles
+#toast-container {
+    position: fixed;
+}

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { Observable } from 'rxjs';
 
@@ -14,9 +15,11 @@ export class HomeComponent implements OnInit {
 
     constructor(
         private countryService: CountryService,
+        private titleService: Title,
     ) { }
 
     public ngOnInit(): void {
         this.$countries_stream = this.countryService.getAllCountries();
+        this.titleService.setTitle('Warp-Worlds | Home');
     }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 import { Observable, map } from 'rxjs';
 
@@ -8,18 +9,19 @@ import { FavoritesService } from '@shared/services/favorites.service';
 @Component({
     selector: 'app-favorites-listing',
     templateUrl: './favorites-listing.component.html',
-    styleUrls: ['./favorites-listing.component.scss']
 })
 export class FavoritesListingComponent implements OnInit {
     public $countries_stream!: Observable<Country[]>;
 
     constructor(
-        private favoritesService: FavoritesService
+        private favoritesService: FavoritesService,
+        private titleService: Title,
     ) { }
 
     public ngOnInit(): void {
         // Clear currently selected list to make sure add to favorites button doesn't show on favorites page
         this.favoritesService.clearCurrentlySelected();
+        this.titleService.setTitle('Warp-Worlds | Favorites');
 
         this.$countries_stream = this.favoritesService
             .getFavoriteCountriesStream()

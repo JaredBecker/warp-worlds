@@ -10,7 +10,7 @@ export class ScrollToTopDirective {
     ) { }
 
     @HostListener('window:scroll') public onWindowScroll(): void {
-        if (window.scrollY > 300) {
+        if (window.scrollY > 375) {
             this.renderer.removeClass(this.el.nativeElement, 'd-none');
             this.renderer.addClass(this.el.nativeElement, 'd-flex');
         } else {

@@ -8,7 +8,6 @@ import { FilterOptions } from '@shared/models/filter-options.interface';
 @Component({
     selector: 'app-region-filter',
     templateUrl: './region-filter.component.html',
-    styleUrls: ['./region-filter.component.scss']
 })
 export class RegionFilterComponent implements OnInit, OnDestroy {
     @Input() public regions!: Set<string>;

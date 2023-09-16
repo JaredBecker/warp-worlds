@@ -10,7 +10,6 @@ import { FilterOptions } from '@shared/models/filter-options.interface';
 @Component({
     selector: 'app-country-listing',
     templateUrl: './country-listing.component.html',
-    styleUrls: ['./country-listing.component.scss']
 })
 export class CountryListingComponent implements OnInit, OnDestroy {
     @Input() public $countries_stream!: Observable<Country[]>;
@@ -117,7 +116,6 @@ export class CountryListingComponent implements OnInit, OnDestroy {
 
     /**
      * Preloads the no result image to make sure it doesn't just pop into the UI
-     * @returns
      */
     private preloadNoResultImage(): Promise<void> {
         return new Promise<void>((resolve, reject) => {

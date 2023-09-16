@@ -4,8 +4,9 @@
         class="form-control search me-2 rounded-4"
         placeholder="Search Countries"
         [formControl]="search_input"
+        style="max-width: 250px"
     />
-    <div ngbDropdown class="d-inline-block" [autoClose]="false" #region_filter="ngbDropdown">
+    <div ngbDropdown class="d-inline-block" autoClose="outside" #region_filter="ngbDropdown">
         <button type="button" class="btn btn-primary rounded-4" id="region_dropdown" ngbDropdownToggle>
             Filter Regions
         </button>

@@ -5,7 +5,6 @@ import { ThemeService } from '@shared/services/theme.service';
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
-    styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent {
     public is_dark_mode: boolean;

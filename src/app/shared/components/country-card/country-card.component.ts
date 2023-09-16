@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
 
@@ -7,12 +8,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Country } from '@shared/models/country.interface';
 import { CountryModalComponent } from '@shared/components/country-modal/country-modal.component';
 import { FavoritesService } from '@shared/services/favorites.service';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-country-card',
     templateUrl: './country-card.component.html',
-    styleUrls: ['./country-card.component.scss']
 })
 export class CountryCardComponent implements OnInit, OnDestroy {
     @Input() public country!: Country;

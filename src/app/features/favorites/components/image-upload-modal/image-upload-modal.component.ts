@@ -8,7 +8,6 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
     selector: 'app-image-upload-modal',
     templateUrl: './image-upload-modal.component.html',
-    styleUrls: ['./image-upload-modal.component.scss']
 })
 export class ImageUploadModalComponent implements OnInit, OnDestroy {
     public is_loading: boolean = false;
@@ -36,14 +35,14 @@ export class ImageUploadModalComponent implements OnInit, OnDestroy {
                         this.validateImageURL(url).then((valid) => {
                             if (valid) {
                                 this.modal.close(`<img src="${url}">`);
+
+                                return;
                             }
 
                             this.is_loading = false;
                             this.not_valid_url = true;
                         })
                     }
-
-
                 }
             })
     }
